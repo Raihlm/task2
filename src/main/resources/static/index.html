@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sederhana Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Menu</h2>
+<button onclick="tampil('app')">Lihat Aplikasi</button>
+<button onclick="tampil('ip')">Lihat IP</button>
+
+<section id="sec-app">
+    <h3>Daftar Aplikasi</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Deskripsi</th>
+            <th>List IP</th>
+        </tr>
+        </thead>
+        <tbody id="body-app"></tbody>
+    </table>
+</section>
+
+<section id="sec-ip" style="display:none">
+    <h3>Daftar IP</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Alamat IP</th>
+            <th>Milik Aplikasi</th>
+        </tr>
+        </thead>
+        <tbody id="body-ip"></tbody>
+    </table>
+</section>
+
+<script>
+    const URL = "http://localhost:8080";
+
+    // Fungsi ganti tampilan
+    function tampil(pilihan) {
+        document.getElementById('sec-app').style.display = (pilihan === 'app') ? 'block' : 'none';
+        document.getElementById('sec-ip').style.display = (pilihan === 'ip') ? 'block' : 'none';
+    }
+
+    // Ambil data Aplikasi
+    fetch(URL + "/app")
+        .then(res => res.json())
+        .then(data => {
+            let html = "";
+            data.forEach(a => {
+                let ips = a.iPsList ? a.iPsList.map(i => i.address).join(", ") : "-";
+                html += `<tr><td>${a.appId}</td><td>${a.name}</td><td>${a.description}</td><td>${ips}</td></tr>`;
+            });
+            document.getElementById('body-app').innerHTML = html;
+        });
+
+    // Ambil data IP
+    fetch(URL + "/ips")
+        .then(res => res.json())
+        .then(data => {
+            let html = "";
+            data.forEach(i => {
+                let namaApp = i.aplikasi ? i.aplikasi.name : "Kosong";
+                html += `<tr><td>${i.id}</td><td>${i.address}</td><td>${i.namaAplikasi}</td></tr>`;
+            });
+            document.getElementById('body-ip').innerHTML = html;
+        });
+</script>
+</body>
+</html>

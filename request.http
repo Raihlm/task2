@@ -1,0 +1,59 @@
+GET http://localhost:8080/
+
+
+###
+GET http://localhost:8080/app
+
+
+### 1. Create / add application
+POST http://localhost:8080/app
+Content-Type: application/json
+
+{
+  "name": "Sistem Logistik",
+  "description": "Pelacakan pengiriman barang",
+  "iPsList": [
+    { "address": "172.16.0.10" },
+    { "address": "172.16.0.11" }
+  ]
+
+}
+
+###2. Get All Applications (List App with IPs)
+GET http://localhost:8080/app
+
+### 3. Get Application by ID
+GET http://localhost:8080/app/1
+
+### 4. Update Application
+POST http://localhost:8080/app
+Content-Type: application/json
+
+{
+  "appId": 1,
+  "name": "Production Server v2",
+  "description": "Deskripsi terupdate"
+}
+
+###
+
+### 5. Delete Application
+# Menghapus ini akan menghapus IP terkait karena CascadeType.ALL
+DELETE http://localhost:8080/app/2
+
+### 6. Get All IPs
+GET http://localhost:8080/ips
+
+###
+
+### 7. Insert IP to Existing Application
+POST http://localhost:8080/ips
+Content-Type: application/json
+
+{
+  "address": "10.0.0.50",
+  "aplikasi": {
+    "appId": 2
+  }
+}
+
