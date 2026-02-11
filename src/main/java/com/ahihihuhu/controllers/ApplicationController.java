@@ -41,4 +41,9 @@ public class ApplicationController {
     public void deleteApplication(@PathVariable Integer id){
         applicationServices.deleteApplication(id);
     }
+
+    @GetMapping("/getIp/{appId}")
+    public List<IPs> getIp(@PathVariable Integer appId){
+        return applicationServices.getIpWithAppId(appId);
+    }
 }

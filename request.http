@@ -57,3 +57,11 @@ Content-Type: application/json
   }
 }
 
+
+
+###  get ips with app
+GET http://localhost:8080/app/getIp/1
+
+
+###  get app with ip
+GET http://localhost:8080/ips/getApp/1

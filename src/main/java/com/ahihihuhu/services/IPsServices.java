@@ -38,13 +38,22 @@ public class IPsServices {
         iPsRepository.deleteById(id);
     }
 
-    public IPs assignIpToApp(Integer ipId, Integer appId){
-        IPs ip = iPsRepository.findById(ipId).orElseThrow();
-        Application app = applicationRepository.findById(appId).orElseThrow();
+ //   public IPs assignIpToApp(Integer ipId, Integer appId){
+ //       IPs ip = iPsRepository.findById(ipId).orElseThrow();
+ //       Application app = applicationRepository.findById(appId).orElseThrow();
+//
+ //       ip.setAplikasi(app);
+ //       return iPsRepository.save(ip);
+//
+ //   }
 
-        ip.setAplikasi(app);
-        return iPsRepository.save(ip);
+    public Application getAppWithIp(Integer ipId){
+        IPs ip = iPsRepository.findById(ipId)
+                .orElseThrow(()->new IllegalStateException(
+                        "Ip with id: " + ipId + "Not found"
+                ));
 
+        return ip.getAplikasi();
     }
 
 

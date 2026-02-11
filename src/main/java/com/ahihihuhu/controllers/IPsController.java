@@ -1,5 +1,6 @@
 package com.ahihihuhu.controllers;
 
+import com.ahihihuhu.entities.Application;
 import com.ahihihuhu.entities.IPs;
 import org.springframework.web.bind.annotation.*;
 import com.ahihihuhu.services.IPsServices;
@@ -27,6 +28,10 @@ public class IPsController {
     @DeleteMapping("/{id}")
     public void deleteIps(@PathVariable Integer id){iPsServices.deleteIPS(id);}
 
+    @GetMapping("/getApp/{ipId}")
+    public Application getApp(@PathVariable Integer ipId){
+        return iPsServices.getAppWithIp(ipId);
+    }
 
 
 }

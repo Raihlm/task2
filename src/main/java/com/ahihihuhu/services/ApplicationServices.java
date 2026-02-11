@@ -1,6 +1,8 @@
 package com.ahihihuhu.services;
 
 import com.ahihihuhu.entities.Application;
+import com.ahihihuhu.entities.IPs;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.ahihihuhu.repo.ApplicationRepository;
 
@@ -34,6 +36,16 @@ public class ApplicationServices {
     public void deleteApplication(Integer id){
 
         applicationRepository.deleteById(id);
+    }
+
+    @Transactional
+    public List<IPs> getIpWithAppId(Integer appId){
+       Application app =  applicationRepository.findById(appId)
+               .orElseThrow(()-> new IllegalStateException(
+                       appId + "not found"
+               ));
+       return app.getiPsList();
+
     }
 
 }
